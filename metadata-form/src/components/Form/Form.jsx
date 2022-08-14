@@ -1,187 +1,246 @@
-import React, {useState, useRef, useEffect} from 'react'
-import './Form.scss'
+import React, { useState, useRef } from "react";
+import "./Form.scss";
 
 export default function Form() {
-  const [toggle, setToggle] = useState(false)
-  const [fileState, setFileState] = useState(false)
-  const [lyrics, setLyricsToggle] = useState(false)
-  const [obj, setObj] = useState({}) 
-  let formRef = useRef()
-  let divRef = useRef()
-  let fileRef = useRef()
-  
-   
-    function onSubmit(e){
-      e.preventDefault()
-      //console.log(e.parentNode)
-      let form = document.querySelector('form')
-      const data = new FormData(form);
-      const json = {};
-      Array.from(data.entries()).forEach(([key, value]) => {
+  const [toggle, setToggle] = useState(false);
+  const [obj, setObj] = useState({});
+  let divRef = useRef();
+
+  function onSubmit(e) {
+    e.preventDefault();
+    let form = document.querySelector("form");
+    const data = new FormData(form);
+    const json = {};
+    Array.from(data.entries()).forEach(([key, value]) => {
       json[key] = value;
-      })
-      setObj(json)
-      
-      setToggle(true)
-      
-      
-     
-    }
-    
-   
-   //console.log(obj['composer'].split(','))
+    });
+    setObj(json);
+
+    setToggle(true);
+  }
+
   return (
     <>
-    { !toggle ?
-    <div className='form-container' >
-      <h2>Metadata Writer</h2>         
-        <lable>For feilds that have multiple inputs seperate by comma</lable>                     
-        <form id='my-form'  method='POST' action="https://intense-spire-76967.herokuapp.com/file" encType='multipart/form-data'>
-        <div className="feild">
-          
-           {/*  <input className='form-control' onChange={() => setFileState(true)} ref={fileRef} id='fup' type='file' name='file'/> */}
-            <div id="drop_zone" onDrag={()=>{console.log('jhey')}} onDrop={()=>{console.log('hey')}} className="drag">
-              <img className='logo' src={require('../../assets/unnamed.jpg')}></img>
-            </div>
+      {!toggle ? (
+        <div className="form-container">
+          <h2>Metadata Writer</h2>
+          <div>
+            Tool to convert song metadata into a pre-formatted structure
           </div>
-          <div className='form-group '> 
-       
-          
-            <div className="feild">
-            
-            <input placeholder='Full Name' type='text' name='fullName'/>
+          <form
+            id="my-form"
+            method="POST"
+            action=""
+            encType="multipart/form-data"
+          >
+            <div className="field">
+              <div
+                id="drop_zone"
+                onDrag={() => {}}
+                onDrop={() => {}}
+                className="drag"
+              >
+                <img
+                  className="logo"
+                  alt="Maximus Music Group logo"
+                  src={require("../../assets/MAXIMUS-SJA-1B.jpg")}
+                ></img>
+              </div>
             </div>
-            <div className="feild">
-            
-            <input placeholder='Last Name' type='text' name='lastName'/>
-            </div>
-            
-            <div className="feild">
-            
-            <input placeholder='Contact Number' type='text' name='number'/>
-            </div>
-            <div className="feild">
-            
-            <input placeholder='Email' type='text' name='Email'/>
-            </div>
-            <div className="feild">
-              <input placeholder='Has this song been previously released or distributed '  />				
-                                  
-            </div>
-            <div className="feild">
-            
-            <input placeholder='Song Name' type='text' name='title'/>
-            </div>
-            
-           
-           
+            <div className="form-group ">
+              <div className="field">
+                <input placeholder="First Name" type="text" name="firstName" />
+              </div>
+              <div className="field">
+                <input placeholder="Last Name" type="text" name="lastName" />
+              </div>
+
+              <div className="field">
+                <input placeholder="Contact Number" type="tel" name="number" />
+              </div>
+              <div className="field">
+                <input placeholder="Email" type="email" name="email" />
+              </div>
+              <div className="field">
+                <input placeholder="Song Name" type="text" name="title" />
+              </div>
+              <div className="field">
+                <label for="previousReleaseOrDistribution">
+                  Has this song been previously released or distributed?
+                </label>
+                <select
+                  id="previousReleaseOrDistribution"
+                  class="select"
+                  name="previousReleaseOrDistribution"
+                >
+                  <option value="yes">Yes</option>
+                  <option value="no">No</option>
+                </select>
+              </div>
+              <div className="field">
+                <label for="explicitLyrics">
+                  Does this song have explicit lyrics?
+                </label>
+                <select
+                  id="explicitLyrics"
+                  class="select"
+                  name="explicitLyrics"
+                >
+                  <option value="yes">Yes</option>
+                  <option value="no">No</option>
+                </select>
+              </div>
+              <div className="field">
+                <label for="hasPublisher">
+                  Is this song listed with a publisher?
+                </label>
+                <select id="hasPublisher" class="select" name="hasPublisher">
+                  <option value="yes">Yes</option>
+                  <option value="no">No</option>
+                </select>
+              </div>
+              <div className="field">
+                <label for="opportunitySubmission">
+                  Are you submitting this for a specific opportunity we sent
+                  you?
+                </label>
+                <select
+                  id="opportunitySubmission"
+                  class="select"
+                  name="opportunitySubmission"
+                >
+                  <option value="yes">Yes</option>
+                  <option value="no">No</option>
+                </select>
+              </div>
+              <div className="field bottom">
+                <input
+                  placeholder="If yes, what is the opportunity name?"
+                  type="text"
+                  name="opportunityName"
+                />
+              </div>
             </div>
             <div className="form-group">
-            <div className="feild">
-            
-            <input placeholder='Artist' type='text' name='artist'/>
-            </div>
-            <div className="feild">
-           
-            <input placeholder='BPM' type='text' name='bpm'/>
-            </div>
-            <div className="feild">
-          
-            <input placeholder='Inital Key' type='text' name='key'/>
-            </div>
-            <div className="feild">
-          
-            <input placeholder='Genre' type='text' name='genre'/>
-            </div>
-            <div className="feild">
-            
-            <input placeholder='SongWriter(s)/Composer' type='text' name='composer' />
-            </div>
-            <div className="feild">
-            
-            <textarea placeholder='Description' className='form-control' type='text' name='desc'/>      
-            </div>
-            </div>
-           
-            <div className='form-group'>
-            <div className="feild">
-            
-             <input placeholder='Intruments' type='text' name='intruments' /> 
+              <div className="field">
+                <input placeholder="Artist" type="text" name="artist" />
               </div>
-            <div className="feild">
-            
-            <input placeholder='Mood/Field' type='text' name='mood' />
+              <div className="field">
+                <input placeholder="BPM" type="text" name="bpm" />
+              </div>
+              <div className="field">
+                <input placeholder="Initial Key" type="text" name="key" />
+              </div>
+              <div className="field">
+                <input placeholder="Genre" type="text" name="genre" />
+              </div>
             </div>
-            <div className="feild">
-           
-            <input placeholder='Tempo' type='text' name='tempo' />
+            <div className="form-group">
+              <div className="field">
+                <textarea
+                  placeholder={
+                    "Songwriter(s)/Composer(s) with IPI #s \nExample: FirstName LastName (BMI #12345678)"
+                  }
+                  className="form-control"
+                  type="text"
+                  name="composer"
+                />
+              </div>
+              <div className="field">
+                <textarea
+                  placeholder="Description (Mood, Feel, Instruments, Keywords, etc. separated by commas"
+                  className="form-control"
+                  type="text"
+                  name="desc"
+                />
+              </div>
+              <div className="field">
+                <textarea
+                  placeholder="Lyrics"
+                  className="form-control"
+                  type="text"
+                  name="lyrics"
+                />
+              </div>
+              <div className="button">
+                <button className="btn btn-primary" onClick={onSubmit}>
+                  Get Comment Data
+                </button>
+              </div>
             </div>
-            <div className="feild">
-            
-            <input placeholder='Keywords' type='text' name='keywords' />
-            </div>
-            <div className="feild">
-            
-            <input placeholder='Sounds Like' type='text' name='soundsLike' />
-            </div>
-            <div className="feild">
-           
-            <textarea placeholder='Lyrics' className='form-control' type='text' name='lyrics' />
-            </div>
-        
-            </div>
-                   
-        </form>     
-
-        <div className='button'>             
-        {/* <input  className='btn btn-primary' value='Get File' type='submit' form='my-form'  onClick={onSubmit}  /> */}
-        <button className='btn btn-primary' onClick={onSubmit}>Get Comment Data</button>
-        </div>     
-    </div>                   
-    :
-    <>
-    <div className="container">
-    
-    <div className='grey-container'>
-      <div ref={divRef} className="clipboard">
-           Song Name: {obj['title']}<br></br>
-          Artist: {obj['artist']}<br></br>
-          BPM: {obj['bpm']}<br></br>
-          Genre: {obj['genre']}<br></br>
-          Description: {obj['desc']}<br></br>
-          Initial Key: {obj['key']}<br></br>
-<br></br>
-RIGHTS HOLDERS<br></br>
-Songwriter(s): <br></br>
-{ obj['composer'].split(',').map((w)=>{
-    return <>{w}<br key={w}></br></> 
-})} <br></br>
-
-<br></br>
-METADATA<br></br>
-Keywords: {obj['keywords']} <br></br>
-Instruments: {obj['intruments']} <br></br>
-Tempo: {obj['tempo']} <br></br>
-Mood/Feel: {obj['mood']} <br></br>
-Sounds Like: {obj['soundsLike']} <br></br>
-<br></br>
-SYNC LICENSING
-For licensing, please contact: Maxwell Elefant (max@maximusmusicgroup.com ), Stephen Antonelli (stephen@maximusmusicgroup.com)
-!!!-ONE STOP READY-!!!
-
-      </div>
-      <div className="clipboard">
-        <lable>Lyrics: </lable>
-        {obj['lyrics']}
+          </form>
         </div>
-    </div>
-    <button className='btn btn-primary' onClick={()=>setToggle(false)}>Back</button>
-   
-    
-    </div>
-    
+      ) : (
+        <>
+          <div className="container">
+            <div className="grey-container">
+              <div ref={divRef} className="clipboard">
+                <div>First Name: {obj["firstName"]} </div>
+                <div>Last Name: {obj["lastName"]}</div>
+                <div>Contact Number: {obj["number"]}</div>
+                <div>Email: {obj["email"]}</div>
+                <div>
+                  Has this song been previously released or distributed:{" "}
+                  {obj["previousReleaseOrDistribution"]}
+                </div>
+                <div>
+                  Does this song have explicit lyrics: {obj["explicitLyrics"]}
+                </div>
+                <div>
+                  Is this song listed with a publisher: {obj["hasPublisher"]}
+                </div>
+                <div>
+                  Are you submitting this for a specific opportunity we sent
+                  you: {obj["opportunitySubmission"]}
+                </div>
+                <div>Opportunity Name: {obj["opportunityName"]}</div>
+                <br />
+                <div>Song Name: {obj["title"]}</div>
+                <div>Artist: {obj["artist"]}</div>
+                <div>BPM: {obj["bpm"]}</div>
+                <div>Genre: {obj["genre"]}</div>
+                <div>Description: {obj["desc"]}</div>
+                <div>Initial Key: {obj["key"]}</div>
+                <br />
+                <div>RIGHTS HOLDERS</div>
+                <div>Songwriter(s):</div>
+                {obj["composer"].split(/[\n]+/).map((writer) => {
+                  return (
+                    <>
+                      <div>{writer}</div>
+                    </>
+                  );
+                })}
+                <br />
+                <br />
+                <div>
+                  SYNC LICENSING For licensing, please contact: Maxwell Elefant
+                  (max@maximusmusicgroup.com), Stephen Antonelli
+                  (stephen@maximusmusicgroup.com) !!!-ONE STOP READY-!!!
+                </div>
+              </div>
+              <div className="clipboard">
+                <div>
+                  <label>Lyrics: </label>
+                </div>
+                {obj["lyrics"].split(/[\n]+/).map((lyrics) => {
+                  return (
+                    <>
+                      <div>{lyrics}</div>
+                    </>
+                  );
+                })}
+              </div>
+            </div>
+            <button
+              className="btn btn-primary back-button"
+              onClick={() => setToggle(false)}
+            >
+              Back
+            </button>
+          </div>
+        </>
+      )}
     </>
-}
-    </>
-  )
+  );
 }
